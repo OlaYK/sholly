@@ -1725,6 +1725,10 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true, timestamp: new Date().toISOString() });
 });
 
+app.get("/health", (_req, res) => {
+  res.json({ ok: true, timestamp: new Date().toISOString() });
+});
+
 app.get("/api/public-config", async (_req, res) => {
   const shippingSettings = await getShippingSettingsFromDb(pool);
   res.json({
