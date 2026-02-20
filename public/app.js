@@ -7,21 +7,21 @@ const currency = new Intl.NumberFormat("en-NG", {
 const BRAND_COPY = {
   "sholly-home": {
     label: "Currently Viewing: Sholly Home",
-    title: "Curated Luxury For Elevated Living",
-    description: "Luxury bedding and decor designed for comfort, depth and elegant interiors.",
+    title: "Shop Premium Bedding & Decor Deals",
+    description: "Browse trending duvets, sheets, pillows and home accents with real-time stock and quick checkout.",
     logoUrl: "/sholly.jpg",
     logoAlt: "Sholly and Shaddy's logo",
     headerMain: "SHOLLY & SHADDY'S",
-    headerSub: "LUXURY BEDS",
+    headerSub: "HOME STORE",
   },
   "apex-apparel": {
     label: "Currently Viewing: Apex Apparel",
-    title: "Premium Native Fashion, Tailored To Stand Out",
-    description: "Modern traditionalwear and statement pieces crafted for ceremonies and everyday style.",
+    title: "Shop Fashion Picks & New Arrivals",
+    description: "Discover tailored nativewear, statement fits and ready-to-wear pieces with live availability.",
     logoUrl: "/apex.jpg",
     logoAlt: "Apex Apparel logo",
     headerMain: "APEX APPAREL",
-    headerSub: "SIGNATURE FASHION",
+    headerSub: "FASHION STORE",
   },
 };
 
@@ -88,6 +88,8 @@ const ui = {
     "sholly-home": document.getElementById("filter-sholly-search"),
     "apex-apparel": document.getElementById("filter-apex-search"),
   },
+  marketSearchForm: document.getElementById("market-search-form"),
+  marketSearch: document.getElementById("market-search"),
   switches: Array.from(document.querySelectorAll("[data-brand-switch]")),
   metrics: {
     products: document.getElementById("metric-products"),
@@ -456,10 +458,17 @@ function setActiveBrand(brand, { persist = true } = {}) {
     ui.brandLogo.src = BRAND_COPY[brand].logoUrl;
     ui.brandLogo.alt = BRAND_COPY[brand].logoAlt;
   }
+  if (ui.marketSearch) {
+    ui.marketSearch.value = state.filters[brand].query || "";
+    ui.marketSearch.placeholder =
+      brand === "apex-apparel"
+        ? "Search Apex products, styles, collections..."
+        : "Search Sholly products, bedding, decor...";
+  }
   document.title =
     brand === "apex-apparel"
-      ? "Apex Apparel | Luxury Collections"
-      : "Sholly & Shaddy's | Luxury Collections";
+      ? "Apex Apparel | Online Store"
+      : "Sholly & Shaddy's | Online Store";
 
   loadSummary(brand).catch(() => {});
 }
@@ -1574,9 +1583,32 @@ function wireFilters() {
 
     ui.searchInputs[brand].addEventListener("input", (event) => {
       state.filters[brand].query = event.target.value;
+      if (brand === state.activeBrand && ui.marketSearch) {
+        ui.marketSearch.value = event.target.value;
+      }
       renderProducts(brand);
     });
   }
+}
+
+function wireGlobalSearch() {
+  if (!ui.marketSearch || !ui.marketSearchForm) return;
+
+  const applySearch = () => {
+    const value = ui.marketSearch.value || "";
+    state.filters[state.activeBrand].query = value;
+    const scopedInput = ui.searchInputs[state.activeBrand];
+    if (scopedInput) {
+      scopedInput.value = value;
+    }
+    renderProducts(state.activeBrand);
+  };
+
+  ui.marketSearch.addEventListener("input", applySearch);
+  ui.marketSearchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    applySearch();
+  });
 }
 
 function wireThemeToggle() {
@@ -1742,11 +1774,12 @@ async function init() {
   loadCart();
   renderCart();
 
-  const storedTheme = localStorage.getItem("storeTheme") || "dark";
+  const storedTheme = localStorage.getItem("storeTheme") || "light";
   applyTheme(storedTheme);
   setMobileMenuOpen(false);
   wireThemeToggle();
   wireMobileHeader();
+  wireGlobalSearch();
   wireBrandSwitches();
   wireFilters();
   wireModal();

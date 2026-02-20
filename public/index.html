@@ -9,11 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body data-theme="dark">
+<body data-theme="light">
   <div class="ambient-bg" aria-hidden="true">
     <span class="orb orb-a"></span>
     <span class="orb orb-b"></span>
     <span class="orb orb-c"></span>
+  </div>
+
+  <div class="market-strip">
+    <p>Free nationwide delivery on selected orders</p>
+    <p>Verified secure checkout and order tracking</p>
+    <p>New drops weekly for home and fashion</p>
   </div>
 
   <header class="topbar" id="topbar">
@@ -21,9 +27,18 @@
       <img src="/sholly.jpg" alt="Sholly and Shaddy's logo" class="brandmark-logo" id="brandmark-logo" />
       <span>
         <span class="brandmark-main" id="brandmark-main">SHOLLY & SHADDY'S</span>
-        <span class="brandmark-sub" id="brandmark-sub">LUXURY BEDS</span>
+        <span class="brandmark-sub" id="brandmark-sub">HOME STORE</span>
       </span>
     </a>
+    <form class="market-search" id="market-search-form" role="search">
+      <input
+        id="market-search"
+        type="search"
+        placeholder="Search products, collections, categories..."
+        aria-label="Search products"
+      />
+      <button type="submit" class="market-search-btn">Search</button>
+    </form>
     <button
       type="button"
       class="icon-btn menu-toggle"
@@ -87,10 +102,15 @@
     <section class="hero reveal">
       <div class="hero-copy">
         <p class="eyebrow" id="hero-brand-label">Currently Viewing: Sholly Home</p>
-        <h1 id="hero-title">Curated Luxury For Elevated Living</h1>
+        <h1 id="hero-title">Shop Premium Bedding & Decor Deals</h1>
         <p id="hero-description">
-          Pick your preferred brand using the switch. Product inventory and stock update automatically from the backend.
+          Browse trending duvets, sheets, pillows and home accents with real-time stock and quick checkout.
         </p>
+        <div class="hero-tags">
+          <span>Same-day order processing</span>
+          <span>Live inventory updates</span>
+          <span>Instant checkout options</span>
+        </div>
         <div class="hero-actions">
           <button type="button" class="btn btn-solid" data-brand-switch="sholly-home">View Sholly Home</button>
           <button type="button" class="btn btn-ghost" data-brand-switch="apex-apparel">View Apex Apparel</button>
@@ -110,6 +130,25 @@
           <strong id="metric-value">&#8358;0</strong>
         </article>
       </div>
+    </section>
+
+    <section class="market-highlights reveal">
+      <article>
+        <h3>Fast Checkout</h3>
+        <p>Paystack, Moniepoint and transfer supported.</p>
+      </article>
+      <article>
+        <h3>Track Orders</h3>
+        <p>Customers can track updates anytime after purchase.</p>
+      </article>
+      <article>
+        <h3>Real-Time Catalog</h3>
+        <p>Products and stock sync instantly from admin dashboard.</p>
+      </article>
+      <article>
+        <h3>Direct Support</h3>
+        <p>WhatsApp support available from every storefront page.</p>
+      </article>
     </section>
 
     <section class="brand-section reveal" id="sholly-section" data-brand="sholly-home">
