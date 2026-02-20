@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Sholly & Shaddy's</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/checkout.css" />
+</head>
+<body data-theme="light">
+  <div class="ambient-bg" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+  </div>
+
+  <header class="topbar checkout-topbar">
+    <a href="/" class="brandmark">
+      <img src="/sholly.jpg" alt="Sholly and Shaddy's logo" class="brandmark-logo" />
+      <span>
+        <span class="brandmark-main">Secure Checkout</span>
+        <span class="brandmark-sub">SHOLLY x APEX</span>
+      </span>
+    </a>
+    <div class="checkout-top-actions">
+      <a href="/" class="icon-btn">Back to Store</a>
+      <a href="/track" class="icon-btn">Track Order</a>
+      <button type="button" class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"></path>
+        </svg>
+        <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 14.1A9 9 0 1 1 9.9 3a7 7 0 1 0 11.1 11.1z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="checkout-layout">
+    <section class="checkout-panel">
+      <header class="checkout-head">
+        <h1>Checkout Details</h1>
+        <p>Complete your details to place your order.</p>
+      </header>
+
+      <form id="checkout-form" class="checkout-form-grid">
+        <div class="field-grid two-col">
+          <label>Full Name <input id="checkout-name" type="text" required /></label>
+          <label>Phone Number <input id="checkout-phone" type="tel" required /></label>
+        </div>
+        <label>Email (required for Paystack/Moniepoint) <input id="checkout-email" type="email" /></label>
+        <div class="field-grid two-col">
+          <label>Delivery State <input id="checkout-shipping-state" type="text" required /></label>
+          <label>Delivery City (optional) <input id="checkout-shipping-city" type="text" /></label>
+        </div>
+        <label>
+          Payment Method
+          <select id="checkout-payment-method" aria-label="Select payment method">
+            <option value="paystack">Paystack (Card/Transfer)</option>
+            <option value="moniepoint">Moniepoint (Card/Transfer)</option>
+            <option value="bank_transfer">Direct Bank Transfer</option>
+          </select>
+        </label>
+        <div id="bank-transfer-panel" class="bank-transfer-panel" hidden>
+          <p class="bank-transfer-title">Transfer To:</p>
+          <p class="bank-transfer-row"><span>Bank</span><strong id="bank-transfer-bank-name">-</strong></p>
+          <p class="bank-transfer-row"><span>Account Name</span><strong id="bank-transfer-account-name">-</strong></p>
+          <p class="bank-transfer-row"><span>Account Number</span><strong id="bank-transfer-account-number">-</strong></p>
+          <p id="bank-transfer-note" class="bank-transfer-note">
+            Complete transfer, then send your order number on WhatsApp for confirmation.
+          </p>
+        </div>
+        <label>Order Notes (optional) <textarea id="checkout-notes" rows="3"></textarea></label>
+        <button type="submit" class="btn btn-solid checkout-submit" id="checkout-btn">Proceed to Payment</button>
+      </form>
+    </section>
+
+    <aside class="checkout-panel">
+      <header class="checkout-head">
+        <h2>Order Summary</h2>
+        <p>Review your items and totals.</p>
+      </header>
+      <div id="checkout-items" class="checkout-items"></div>
+      <div class="coupon-row checkout-coupon">
+        <input id="coupon-code" type="text" placeholder="Coupon code" />
+        <button type="button" class="btn btn-ghost btn-small" id="apply-coupon">Apply</button>
+      </div>
+      <p id="coupon-note" class="coupon-note"></p>
+      <div class="checkout-totals">
+        <p>Subtotal <strong id="cart-subtotal">&#8358;0</strong></p>
+        <p>Discount <strong id="cart-discount">&#8358;0</strong></p>
+        <p>Shipping <strong id="cart-shipping">&#8358;0</strong></p>
+        <p class="shipping-note" id="shipping-note">Enter your delivery state to calculate shipping.</p>
+        <p class="grand-total">Total <strong id="cart-total">&#8358;0</strong></p>
+      </div>
+      <p id="checkout-success" class="checkout-success" hidden></p>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="/checkout.js"></script>
+</body>
+</html>

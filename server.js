@@ -7295,6 +7295,10 @@ app.get("/track", (_req, res) => {
   res.sendFile(path.join(__dirname, "public", "track.html"));
 });
 
+app.get("/checkout", (_req, res) => {
+  res.sendFile(path.join(__dirname, "public", "checkout.html"));
+});
+
 app.use((error, _req, res, next) => {
   if (!error) {
     return next();

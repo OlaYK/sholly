@@ -134,6 +134,7 @@ const ui = {
   cartShipping: document.getElementById("cart-shipping"),
   cartTotal: document.getElementById("cart-total"),
   shippingNote: document.getElementById("shipping-note"),
+  cartGoCheckout: document.getElementById("cart-go-checkout"),
   cartCount: document.getElementById("cart-count"),
   couponCode: document.getElementById("coupon-code"),
   applyCoupon: document.getElementById("apply-coupon"),
@@ -564,7 +565,9 @@ function renderModalSelection() {
   ui.modalAddCart.textContent =
     !variantChosen ? "Select Variant" : effectiveStockQty < 1 ? "Out of Stock" : "Add to Cart";
   if (ui.modalWishlist) {
-    ui.modalWishlist.disabled = requiresVariant && !selection.selectedVariant;
+    ui.modalWishlist.disabled = !variantChosen || effectiveStockQty < 1;
+    ui.modalWishlist.textContent =
+      !variantChosen ? "Select Variant" : effectiveStockQty < 1 ? "Out of Stock" : "Buy Now";
   }
 
   if (ui.modalVariantHint) {
@@ -696,7 +699,12 @@ function renderProducts(brand) {
     });
     wishlistButton.addEventListener("click", async (event) => {
       event.stopPropagation();
-      await saveWishlistItem(product.id, null);
+      if (product.hasVariants) {
+        await openModal(product);
+        showToast("Select a variant, then tap Buy Now.");
+        return;
+      }
+      buyNow(product.id);
     });
 
     const variantsReady = Array.isArray(state.variantsByProduct[String(product.id)]);
@@ -781,6 +789,9 @@ function computeCartTotals() {
 }
 
 function shippingNoteText() {
+  if (!ui.checkoutShippingState && !ui.checkoutShippingCity) {
+    return "Shipping and delivery details will be finalized on checkout page.";
+  }
   if (state.checkoutShipping.loading) {
     return "Calculating shipping...";
   }
@@ -899,6 +910,14 @@ function scheduleShippingQuote({ force = false } = {}) {
 }
 
 async function refreshShippingQuote({ force = false } = {}) {
+  if (!ui.checkoutShippingState && !ui.checkoutShippingCity) {
+    state.checkoutShipping.shippingFeeKobo = 0;
+    state.checkoutShipping.freeShippingApplied = false;
+    state.checkoutShipping.loading = false;
+    renderCartTotals();
+    return;
+  }
+
   const shippingState = (ui.checkoutShippingState?.value || "").trim();
   const shippingCity = (ui.checkoutShippingCity?.value || "").trim();
 
@@ -1081,7 +1100,11 @@ function renderCart() {
     empty.className = "cart-empty";
     empty.textContent = "Your cart is currently empty.";
     ui.cartItems.appendChild(empty);
-    ui.checkoutBtn.disabled = true;
+    if (ui.cartGoCheckout) {
+      ui.cartGoCheckout.classList.add("disabled");
+      ui.cartGoCheckout.setAttribute("aria-disabled", "true");
+      ui.cartGoCheckout.setAttribute("tabindex", "-1");
+    }
   } else {
     for (const item of state.cart) {
       const product = getProductById(item.productId);
@@ -1148,7 +1171,11 @@ function renderCart() {
 
       ui.cartItems.appendChild(card);
     }
-    ui.checkoutBtn.disabled = false;
+    if (ui.cartGoCheckout) {
+      ui.cartGoCheckout.classList.remove("disabled");
+      ui.cartGoCheckout.removeAttribute("aria-disabled");
+      ui.cartGoCheckout.removeAttribute("tabindex");
+    }
   }
 
   renderCartTotals();
@@ -1220,6 +1247,58 @@ function addToCart(productId, qty = 1, { variantId = null, variantData = null } 
   showToast(`${product.name}${selectedVariantLabel ? ` (${selectedVariantLabel})` : ""} added to cart.`);
 }
 
+function buyNow(productId, { variantId = null, variantData = null } = {}) {
+  const product = getProductById(productId);
+  if (!product) {
+    showToast("Product unavailable.");
+    return;
+  }
+  if (product.hasVariants && variantId == null) {
+    showToast("Select a variant first.");
+    return;
+  }
+
+  const variant = variantId == null ? null : variantData || getVariantForProduct(productId, variantId);
+  const maxStock = variant ? Number(variant.stockQty || 0) : Number(product.stockQty || 0);
+  if (maxStock < 1) {
+    showToast("This product is out of stock.");
+    return;
+  }
+
+  const unitPrice =
+    variant && variant.priceOverrideKobo != null ? Number(variant.priceOverrideKobo) : Number(product.priceKobo || 0);
+  const selectedVariantLabel = variantLabel(variant) || "";
+  const selectedImage =
+    variant?.imageUrlThumb || variant?.imageUrlOptimized || variant?.imageUrl || getProductImageThumb(product);
+
+  state.cart = [
+    {
+      productId,
+      variantId: variant ? Number(variant.id) : null,
+      variantLabel: selectedVariantLabel,
+      qty: 1,
+      snapshot: {
+        name: product.name,
+        imageUrl: selectedImage,
+        priceKobo: unitPrice,
+        stockQty: maxStock,
+      },
+    },
+  ];
+
+  clearCoupon("");
+  if (ui.couponCode) {
+    ui.couponCode.value = "";
+  }
+  saveCart();
+  renderCart();
+  if (ui.modal?.open) {
+    ui.modal.close();
+  }
+  showToast("Redirecting to checkout...");
+  window.location.href = "/checkout";
+}
+
 function changeCartQty(productId, variantId, delta) {
   const item = findCartItem(productId, variantId);
   if (!item) return;
@@ -1253,7 +1332,9 @@ function closeCart() {
 }
 
 function resetCheckoutState() {
-  ui.checkoutForm.reset();
+  if (ui.checkoutForm) {
+    ui.checkoutForm.reset();
+  }
   state.checkoutShipping.shippingState = "";
   state.checkoutShipping.shippingCity = "";
   state.checkoutShipping.shippingFeeKobo = 0;
@@ -1694,17 +1775,13 @@ function wireModal() {
     });
   });
   if (ui.modalWishlist) {
-    ui.modalWishlist.addEventListener("click", async () => {
+    ui.modalWishlist.addEventListener("click", () => {
       if (!state.modalProduct) return;
       const selection = resolveModalSelection(state.modalProduct);
-      if (state.modalProduct.hasVariants && !selection.selectedVariant) {
-        showToast("Select a variant first.");
-        return;
-      }
-      await saveWishlistItem(
-        state.modalProduct.id,
-        selection.selectedVariant ? Number(selection.selectedVariant.id) : null
-      );
+      buyNow(state.modalProduct.id, {
+        variantId: selection.selectedVariant ? Number(selection.selectedVariant.id) : null,
+        variantData: selection.selectedVariant || null,
+      });
     });
   }
   if (ui.modalVariantSelect) {
@@ -1720,20 +1797,42 @@ function wireCart() {
   ui.cartOpen.addEventListener("click", openCart);
   ui.cartClose.addEventListener("click", closeCart);
   ui.cartBackdrop.addEventListener("click", closeCart);
-  ui.checkoutForm.addEventListener("submit", handleCheckout);
-  ui.checkoutPaymentMethod.addEventListener("change", syncCheckoutPaymentUI);
-  ui.checkoutShippingState.addEventListener("input", () => scheduleShippingQuote({ force: true }));
-  ui.checkoutShippingCity.addEventListener("input", () => scheduleShippingQuote({ force: true }));
-  ui.applyCoupon.addEventListener("click", applyCouponCode);
-  ui.couponCode.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      applyCouponCode();
-    }
-  });
-  [ui.checkoutName, ui.checkoutPhone, ui.checkoutEmail, ui.checkoutShippingState, ui.checkoutShippingCity].forEach((input) => {
-    input.addEventListener("change", () => scheduleCartTracking());
-  });
+  if (ui.cartGoCheckout) {
+    ui.cartGoCheckout.addEventListener("click", (event) => {
+      if (ui.cartGoCheckout.classList.contains("disabled")) {
+        event.preventDefault();
+        showToast("Add items to cart before checkout.");
+      }
+    });
+  }
+  if (ui.checkoutForm) {
+    ui.checkoutForm.addEventListener("submit", handleCheckout);
+  }
+  if (ui.checkoutPaymentMethod) {
+    ui.checkoutPaymentMethod.addEventListener("change", syncCheckoutPaymentUI);
+  }
+  if (ui.checkoutShippingState) {
+    ui.checkoutShippingState.addEventListener("input", () => scheduleShippingQuote({ force: true }));
+  }
+  if (ui.checkoutShippingCity) {
+    ui.checkoutShippingCity.addEventListener("input", () => scheduleShippingQuote({ force: true }));
+  }
+  if (ui.applyCoupon) {
+    ui.applyCoupon.addEventListener("click", applyCouponCode);
+  }
+  if (ui.couponCode) {
+    ui.couponCode.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        applyCouponCode();
+      }
+    });
+  }
+  [ui.checkoutName, ui.checkoutPhone, ui.checkoutEmail, ui.checkoutShippingState, ui.checkoutShippingCity]
+    .filter(Boolean)
+    .forEach((input) => {
+      input.addEventListener("change", () => scheduleCartTracking());
+    });
 }
 
 function revealNewElements() {
@@ -1784,8 +1883,12 @@ async function init() {
   wireFilters();
   wireModal();
   wireCart();
-  ui.checkoutShippingState.value = state.checkoutShipping.shippingState;
-  ui.checkoutShippingCity.value = state.checkoutShipping.shippingCity;
+  if (ui.checkoutShippingState) {
+    ui.checkoutShippingState.value = state.checkoutShipping.shippingState;
+  }
+  if (ui.checkoutShippingCity) {
+    ui.checkoutShippingCity.value = state.checkoutShipping.shippingCity;
+  }
   applyPublicConfig();
 
   setActiveBrand(state.activeBrand, { persist: false });

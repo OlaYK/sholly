@@ -34,6 +34,7 @@ It provides:
 
 ### 3.1 Client apps
 - Storefront: `/` (`public/index.html`, `public/app.js`, `public/styles.css`)
+- Checkout: `/checkout` (`public/checkout.html`, `public/checkout.js`, `public/checkout.css`)
 - Admin: `/admin` (`public/admin.html`, `public/admin.js`, `public/admin.css`)
 - Customer account: `/account` (`public/account.html`, `public/account.js`, `public/account.css`)
 - Tracking page: `/track` (`public/track.html`, `public/track.js`, `public/track.css`)
@@ -372,4 +373,3 @@ Use:
   - structured log shipping
   - automated integration tests
   - object-level RBAC tightening for large teams
-

@@ -83,6 +83,7 @@ npm run dev
 - Admin panel: `http://localhost:3000/admin`
 - Customer account: `http://localhost:3000/account`
 - Tracking page: `http://localhost:3000/track`
+- Checkout page: `http://localhost:3000/checkout`
 
 ## 4. Documentation
 

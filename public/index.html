@@ -237,7 +237,7 @@
       <p class="modal-stock" id="modal-stock"></p>
       <div class="modal-actions">
         <button type="button" class="btn btn-solid" id="modal-add-cart">Add to Cart</button>
-        <button type="button" class="btn btn-ghost" id="modal-wishlist">Save</button>
+        <button type="button" class="btn btn-ghost" id="modal-wishlist">Buy Now</button>
         <a id="modal-whatsapp" class="btn btn-ghost" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
@@ -254,38 +254,12 @@
       <p>Subtotal <strong id="cart-subtotal">&#8358;0</strong></p>
       <p>Discount <strong id="cart-discount">&#8358;0</strong></p>
       <p>Shipping <strong id="cart-shipping">&#8358;0</strong></p>
-      <p class="shipping-note" id="shipping-note">Enter your delivery state to get shipping fee.</p>
+      <p class="shipping-note" id="shipping-note">Shipping and delivery details will be finalized on checkout page.</p>
       <p>Total <strong id="cart-total">&#8358;0</strong></p>
-      <div class="coupon-row">
-        <input id="coupon-code" type="text" placeholder="Coupon code" />
-        <button type="button" class="btn btn-ghost btn-small" id="apply-coupon">Apply</button>
+      <div class="cart-checkout-actions">
+        <a href="/checkout" class="btn btn-solid cart-checkout-btn" id="cart-go-checkout">Proceed to Checkout</a>
       </div>
-      <p class="coupon-note" id="coupon-note"></p>
     </div>
-    <form id="checkout-form" class="checkout-form">
-      <h4>Checkout</h4>
-      <input id="checkout-name" type="text" placeholder="Full name" required />
-      <input id="checkout-phone" type="tel" placeholder="Phone number" required />
-      <input id="checkout-email" type="email" placeholder="Email (required for Paystack)" />
-      <input id="checkout-shipping-state" type="text" placeholder="Delivery state (required)" required />
-      <input id="checkout-shipping-city" type="text" placeholder="Delivery city (optional)" />
-      <select id="checkout-payment-method" aria-label="Select payment method">
-        <option value="paystack">Paystack (Card/Transfer)</option>
-        <option value="moniepoint">Moniepoint (Card/Transfer)</option>
-        <option value="bank_transfer">Direct Bank Transfer</option>
-      </select>
-      <div id="bank-transfer-panel" class="bank-transfer-panel" hidden>
-        <p class="bank-transfer-title">Transfer to:</p>
-        <p class="bank-transfer-row"><span>Bank</span><strong id="bank-transfer-bank-name">-</strong></p>
-        <p class="bank-transfer-row"><span>Account Name</span><strong id="bank-transfer-account-name">-</strong></p>
-        <p class="bank-transfer-row"><span>Account Number</span><strong id="bank-transfer-account-number">-</strong></p>
-        <p id="bank-transfer-note" class="bank-transfer-note">
-          Complete transfer, then send your order number on WhatsApp for confirmation.
-        </p>
-      </div>
-      <textarea id="checkout-notes" rows="3" placeholder="Notes (optional)"></textarea>
-      <button type="submit" class="btn btn-solid" id="checkout-btn">Proceed to Payment</button>
-    </form>
   </aside>
 
   <template id="card-template">
@@ -306,7 +280,7 @@
           <span class="pill pill-stock"></span>
         </div>
         <div class="card-actions">
-          <button class="btn btn-ghost btn-small card-wishlist" type="button">Save</button>
+          <button class="btn btn-ghost btn-small card-wishlist" type="button">Buy Now</button>
           <button class="btn btn-ghost btn-small card-view" type="button">Quick View</button>
           <button class="btn btn-solid btn-small card-add" type="button">Add to Cart</button>
         </div>

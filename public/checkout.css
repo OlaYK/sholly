@@ -1,0 +1,253 @@
+.checkout-topbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkout-top-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkout-layout {
+  width: min(1220px, 94vw);
+  margin: 16px auto 34px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 14px;
+}
+
+.checkout-panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+}
+
+.checkout-head h1,
+.checkout-head h2 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.checkout-head p {
+  margin: 6px 0 0;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+}
+
+.checkout-form-grid {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.field-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.checkout-form-grid label {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.checkout-form-grid input,
+.checkout-form-grid select,
+.checkout-form-grid textarea {
+  width: 100%;
+  margin-top: 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-2);
+  color: var(--text-main);
+  font: inherit;
+  padding: 11px 12px;
+}
+
+.checkout-form-grid textarea {
+  resize: vertical;
+}
+
+.checkout-submit {
+  margin-top: 4px;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.checkout-items {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+  max-height: 44vh;
+  overflow: auto;
+}
+
+.checkout-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 10px;
+  background: var(--bg-2);
+}
+
+.checkout-item img {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.checkout-item h4 {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.checkout-item p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+}
+
+.checkout-item-controls {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.checkout-item-total {
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.qty-controls {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.qty-controls button {
+  border: none;
+  background: var(--bg-1);
+  color: var(--text-main);
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.qty-controls span {
+  min-width: 34px;
+  text-align: center;
+  font-size: 0.84rem;
+}
+
+.remove-item {
+  border: 1px solid rgba(175, 86, 72, 0.36);
+  border-radius: 999px;
+  background: rgba(175, 86, 72, 0.12);
+  color: var(--danger-text);
+  padding: 6px 10px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.checkout-coupon {
+  margin-top: 12px;
+}
+
+.checkout-coupon input {
+  background: var(--bg-2);
+}
+
+.coupon-note {
+  margin: 8px 0 0;
+  min-height: 18px;
+  font-size: 0.76rem;
+  color: var(--gold);
+}
+
+.checkout-totals {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.checkout-totals p {
+  margin: 0 0 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-totals .shipping-note {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.grand-total {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+.grand-total strong {
+  font-size: 1.08rem;
+}
+
+.checkout-success {
+  margin: 12px 0 0;
+  border: 1px solid rgba(42, 121, 232, 0.35);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(42, 121, 232, 0.12);
+  color: var(--text-main);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 980px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .checkout-topbar {
+    position: static;
+  }
+
+  .checkout-top-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
