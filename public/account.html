@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account | Sholly & Shaddy's</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/account.css" />
+</head>
+<body data-theme="dark">
+  <div class="ambient-bg" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+  </div>
+
+  <header class="topbar">
+    <a href="/" class="brandmark">
+      <img src="/sholly.jpg" alt="Sholly and Shaddy's logo" class="brandmark-logo" />
+      <span>
+        <span class="brandmark-main">MY ACCOUNT</span>
+        <span class="brandmark-sub">SHOLLY x APEX</span>
+      </span>
+    </a>
+    <div class="topbar-actions">
+      <button type="button" class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch to light mode" title="Switch to light mode">
+        <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"></path>
+        </svg>
+        <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 14.1A9 9 0 1 1 9.9 3a7 7 0 1 0 11.1 11.1z"></path>
+        </svg>
+      </button>
+      <a href="/" class="icon-btn">
+        <span class="label-with-icon">
+          <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10 6l-6 6 6 6"></path>
+            <path d="M4 12h16"></path>
+          </svg>
+          <span>Back to Store</span>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel" id="auth-panel">
+      <div class="panel-head">
+        <h1>Customer Access</h1>
+        <p>Log in to view orders, wishlist and saved addresses.</p>
+      </div>
+
+      <div class="auth-switch">
+        <button id="mode-login" class="switch-btn active" type="button">Login</button>
+        <button id="mode-register" class="switch-btn" type="button">Create Account</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label>Email <input id="login-email" type="email" required /></label>
+        <label>Password <input id="login-password" type="password" required minlength="8" /></label>
+        <button class="btn" type="submit">Login</button>
+      </form>
+
+      <form id="register-form" class="auth-form" hidden>
+        <label>Full Name <input id="register-full-name" type="text" required /></label>
+        <label>Phone <input id="register-phone" type="tel" required /></label>
+        <label>Email <input id="register-email" type="email" required /></label>
+        <label>Password <input id="register-password" type="password" required minlength="8" /></label>
+        <button class="btn" type="submit">Create Account</button>
+      </form>
+    </section>
+
+    <section class="panel" id="profile-panel" hidden>
+      <div class="panel-head">
+        <h2>Profile</h2>
+        <button id="logout-btn" class="btn btn-alt" type="button">
+          <span class="label-with-icon">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 17l5-5-5-5"></path>
+              <path d="M15 12H3"></path>
+              <path d="M13 3h6v18h-6"></path>
+            </svg>
+            <span>Logout</span>
+          </span>
+        </button>
+      </div>
+      <p class="profile-line"><strong>Name:</strong> <span id="profile-name">-</span></p>
+      <p class="profile-line"><strong>Email:</strong> <span id="profile-email">-</span></p>
+      <p class="profile-line"><strong>Phone:</strong> <span id="profile-phone">-</span></p>
+      <p class="profile-line"><strong>Member Since:</strong> <span id="profile-created">-</span></p>
+    </section>
+
+    <section class="panel" id="orders-panel" hidden>
+      <div class="panel-head">
+        <h2>Orders</h2>
+        <button id="refresh-orders" class="btn btn-alt" type="button">
+          <span class="label-with-icon">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 6v5h-5"></path>
+              <path d="M4 18v-5h5"></path>
+              <path d="M6 9a7.5 7.5 0 0 1 12.6-2"></path>
+              <path d="M18 15a7.5 7.5 0 0 1-12.6 2"></path>
+            </svg>
+            <span>Refresh</span>
+          </span>
+        </button>
+      </div>
+      <div id="orders-list" class="list"></div>
+    </section>
+
+    <section class="panel" id="addresses-panel" hidden>
+      <div class="panel-head">
+        <h2>Saved Addresses</h2>
+        <button id="refresh-addresses" class="btn btn-alt" type="button">
+          <span class="label-with-icon">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 6v5h-5"></path>
+              <path d="M4 18v-5h5"></path>
+              <path d="M6 9a7.5 7.5 0 0 1 12.6-2"></path>
+              <path d="M18 15a7.5 7.5 0 0 1-12.6 2"></path>
+            </svg>
+            <span>Refresh</span>
+          </span>
+        </button>
+      </div>
+
+      <form id="address-form" class="address-form">
+        <div class="two-col">
+          <label>Label <input id="address-label" type="text" value="Home" /></label>
+          <label>Recipient <input id="address-recipient" type="text" required /></label>
+        </div>
+        <div class="two-col">
+          <label>Phone <input id="address-phone" type="tel" required /></label>
+          <label>State <input id="address-state" type="text" required /></label>
+        </div>
+        <label>Address Line 1 <input id="address-line1" type="text" required /></label>
+        <label>Address Line 2 <input id="address-line2" type="text" /></label>
+        <div class="two-col">
+          <label>City <input id="address-city" type="text" required /></label>
+          <label>Country <input id="address-country" type="text" value="Nigeria" /></label>
+        </div>
+        <div class="two-col">
+          <label>Postal Code <input id="address-postal" type="text" /></label>
+          <label class="checkbox">
+            <input id="address-default" type="checkbox" />
+            Set as default
+          </label>
+        </div>
+        <button class="btn" type="submit">Add Address</button>
+      </form>
+
+      <div id="addresses-list" class="list"></div>
+    </section>
+
+    <section class="panel" id="wishlist-panel" hidden>
+      <div class="panel-head">
+        <h2>Wishlist</h2>
+        <button id="refresh-wishlist" class="btn btn-alt" type="button">
+          <span class="label-with-icon">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 6v5h-5"></path>
+              <path d="M4 18v-5h5"></path>
+              <path d="M6 9a7.5 7.5 0 0 1 12.6-2"></path>
+              <path d="M18 15a7.5 7.5 0 0 1-12.6 2"></path>
+            </svg>
+            <span>Refresh</span>
+          </span>
+        </button>
+      </div>
+      <div id="wishlist-list" class="list"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="/account.js"></script>
+</body>
+</html>

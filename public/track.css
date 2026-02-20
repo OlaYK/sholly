@@ -1,0 +1,186 @@
+.track-main {
+  width: min(980px, 92vw);
+  margin: 30px auto 72px;
+  display: grid;
+  gap: 16px;
+}
+
+.track-card {
+  background: linear-gradient(160deg, var(--surface-strong), var(--surface));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  padding: clamp(16px, 3vw, 26px);
+}
+
+.track-card h1 {
+  margin: 0 0 8px;
+  font-family: "Bodoni Moda", serif;
+  font-size: clamp(1.6rem, 3.8vw, 2.6rem);
+}
+
+.track-subtitle {
+  margin: 0 0 14px;
+  color: var(--text-soft);
+}
+
+.track-form {
+  display: grid;
+  gap: 10px;
+}
+
+.track-form input,
+.track-proof-form input,
+.track-proof-form textarea {
+  width: 100%;
+  padding: 10px 11px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-main);
+  font: inherit;
+}
+
+.track-message {
+  min-height: 18px;
+  margin: 10px 0 0;
+  color: var(--gold-soft);
+  font-size: 0.8rem;
+}
+
+.track-order-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.track-order-head h2 {
+  margin: 7px 0 0;
+  font-family: "Bodoni Moda", serif;
+}
+
+.track-status-pill {
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-size: 0.67rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.track-status-pill.pending_payment {
+  background: rgba(195, 146, 64, 0.16);
+}
+
+.track-status-pill.paid,
+.track-status-pill.processing,
+.track-status-pill.shipped,
+.track-status-pill.delivered {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.track-status-pill.cancelled,
+.track-status-pill.refunded {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.track-summary {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.track-summary article {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  background: var(--surface);
+}
+
+.track-summary small {
+  display: block;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 0.64rem;
+}
+
+.track-summary strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.94rem;
+}
+
+.track-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.track-grid h3,
+.track-proof h3,
+.track-proof-existing h3 {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+.track-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.track-list li {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: var(--surface);
+  font-size: 0.82rem;
+}
+
+.track-proof,
+.track-proof-existing {
+  margin-top: 14px;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.track-proof-form {
+  display: grid;
+  gap: 10px;
+}
+
+.track-proof-existing a {
+  color: var(--gold-soft);
+}
+
+#track-whatsapp {
+  margin-top: 14px;
+}
+
+.track-card .muted {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .track-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .track-grid {
+    grid-template-columns: 1fr;
+  }
+}

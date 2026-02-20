@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Admin | Sholly & Shaddy's</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body>
+  <header class="admin-header">
+    <div>
+      <p class="eyebrow">Owner Panel</p>
+      <h1>Product Inventory Manager</h1>
+    </div>
+    <a href="/" class="back-link">Back to Storefront</a>
+  </header>
+
+  <main class="admin-layout">
+    <section class="panel" id="auth-panel">
+      <h2>Admin Login</h2>
+      <label>
+        Username
+        <input id="admin-username" type="text" placeholder="Admin username" />
+      </label>
+      <label>
+        Password
+        <input id="admin-password" type="password" placeholder="Admin password" />
+      </label>
+      <div class="actions">
+        <button id="admin-login" class="btn" type="button">Login</button>
+        <button id="admin-logout" class="btn btn-alt" type="button">Logout</button>
+      </div>
+      <div class="actions">
+        <button id="admin-2fa-setup" class="btn btn-alt" type="button">Setup 2FA</button>
+        <button id="admin-2fa-disable" class="btn btn-alt" type="button">Disable 2FA</button>
+        <button id="admin-sessions" class="btn btn-alt" type="button">Sessions</button>
+      </div>
+      <p class="muted" id="admin-auth-status">Not logged in.</p>
+    </section>
+
+    <section class="panel panel-form admin-managed">
+      <h2>Create / Edit Product</h2>
+      <form id="product-form">
+        <input id="product-id" type="hidden" />
+
+        <label>Name <input id="name" required /></label>
+        <label>Slug <input id="slug" required placeholder="e.g. imperial-velvet-duvet-set" /></label>
+        <label>
+          Brand
+          <select id="brand" required>
+            <option value="sholly-home">Sholly Home</option>
+            <option value="apex-apparel">Apex Apparel</option>
+          </select>
+        </label>
+        <label>Category <input id="category" required /></label>
+        <label>Description <textarea id="description" rows="3"></textarea></label>
+
+        <div class="two-col">
+          <label>Price (Naira) <input id="price" type="number" min="0" step="1" required /></label>
+          <label>Compare At (Naira) <input id="compare" type="number" min="0" step="1" /></label>
+        </div>
+
+        <div class="two-col">
+          <label>Stock Qty <input id="stock" type="number" min="0" step="1" required /></label>
+          <label>Reorder Threshold <input id="reorder-threshold" type="number" min="0" step="1" value="0" /></label>
+        </div>
+        <label>Has Variants <input id="has-variants" type="checkbox" /></label>
+        <label>Featured <input id="featured" type="checkbox" /></label>
+
+        <label>Main Image URL <input id="image-url" type="url" required /></label>
+        <label>
+          Upload Image (Cloudinary)
+          <input id="image-file" type="file" accept="image/*" />
+        </label>
+        <div class="actions">
+          <button type="button" id="upload-image" class="btn btn-alt">Upload Image</button>
+        </div>
+        <p class="muted" id="cloudinary-status">Cloudinary status not checked yet.</p>
+        <label>Gallery URLs (comma separated) <input id="gallery-urls" /></label>
+
+        <div class="actions">
+          <button type="submit" class="btn">Save Product</button>
+          <button type="button" id="reset-form" class="btn btn-alt">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel panel-list admin-managed">
+      <div class="list-head">
+        <h2>Live Inventory</h2>
+        <button id="refresh-list" class="btn btn-alt">Refresh</button>
+      </div>
+      <input id="search-products" type="search" placeholder="Search product name..." />
+      <div id="inventory-list" class="inventory-list"></div>
+    </section>
+  </main>
+
+  <section class="admin-extended admin-managed">
+    <section class="panel">
+      <div class="list-head">
+        <h2>Business Dashboard</h2>
+        <button id="refresh-dashboard" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card"><small>Products / Variants</small><strong id="stat-products">0</strong></article>
+        <article class="stat-card"><small>Low Stock P / V</small><strong id="stat-low-stock">0</strong></article>
+        <article class="stat-card"><small>Total Revenue</small><strong id="stat-revenue">NGN 0</strong></article>
+        <article class="stat-card"><small>Total Expenses</small><strong id="stat-expenses">NGN 0</strong></article>
+        <article class="stat-card"><small>Net Profit</small><strong id="stat-profit">NGN 0</strong></article>
+        <article class="stat-card"><small>Abandoned Carts</small><strong id="stat-abandoned">0</strong></article>
+      </div>
+      <div class="actions">
+        <button id="shipping-config-btn" class="btn btn-alt" type="button">Shipping Config</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Expenses</h2>
+        <button id="refresh-expenses" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <form id="expense-form">
+        <div class="two-col">
+          <label>Title <input id="expense-title" required /></label>
+          <label>Category <input id="expense-category" value="operations" /></label>
+        </div>
+        <div class="two-col">
+          <label>Amount (Naira) <input id="expense-amount" type="number" min="0" step="1" required /></label>
+          <label>Date <input id="expense-date" type="datetime-local" /></label>
+        </div>
+        <label>Notes <input id="expense-notes" /></label>
+        <div class="actions">
+          <button type="submit" class="btn">Add Expense</button>
+        </div>
+      </form>
+      <div id="expenses-list" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Order Pipeline</h2>
+        <button id="refresh-orders" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <label>
+        Filter Status
+        <select id="orders-filter-status">
+          <option value="">All</option>
+          <option value="pending_payment">Pending Payment</option>
+          <option value="paid">Paid</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="refunded">Refunded</option>
+        </select>
+      </label>
+      <div id="orders-list" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Coupons</h2>
+        <button id="refresh-coupons" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <form id="coupon-form">
+        <div class="two-col">
+          <label>Code <input id="coupon-code" required /></label>
+          <label>Discount Type
+            <select id="coupon-type">
+              <option value="percent">Percent</option>
+              <option value="fixed">Fixed (Kobo)</option>
+            </select>
+          </label>
+        </div>
+        <div class="two-col">
+          <label>Discount Value <input id="coupon-value" type="number" min="1" required /></label>
+          <label>Brand Scope
+            <select id="coupon-brand">
+              <option value="">All Brands</option>
+              <option value="sholly-home">Sholly Home</option>
+              <option value="apex-apparel">Apex Apparel</option>
+            </select>
+          </label>
+        </div>
+        <div class="two-col">
+          <label>Min Order (Kobo) <input id="coupon-min-order" type="number" min="0" value="0" /></label>
+          <label>Usage Limit <input id="coupon-usage-limit" type="number" min="1" /></label>
+        </div>
+        <label>Description <input id="coupon-description" /></label>
+        <div class="actions">
+          <button type="submit" class="btn">Create Coupon</button>
+        </div>
+      </form>
+      <div id="coupons-list" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Low Stock Alerts</h2>
+        <button id="refresh-alerts" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <div id="alerts-list" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Abandoned Carts</h2>
+        <button id="refresh-carts" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <div id="abandoned-list" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Admin Users</h2>
+        <button id="refresh-users" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <form id="admin-user-form">
+        <div class="two-col">
+          <label>Username <input id="new-admin-username" /></label>
+          <label>Password <input id="new-admin-password" type="password" /></label>
+        </div>
+        <label>Role
+          <select id="new-admin-role">
+            <option value="viewer">Viewer</option>
+            <option value="editor">Editor</option>
+            <option value="manager">Manager</option>
+            <option value="owner">Owner</option>
+          </select>
+        </label>
+        <div class="actions">
+          <button type="submit" class="btn">Create Admin User</button>
+        </div>
+      </form>
+      <div id="admin-users-list" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Analytics</h2>
+        <button id="refresh-analytics" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <label>
+        Window (days)
+        <select id="analytics-window">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+      </label>
+      <div id="analytics-summary" class="inventory-list"></div>
+      <h3>Top Products</h3>
+      <div id="analytics-top-products" class="inventory-list"></div>
+      <h3>Brand Split</h3>
+      <div id="analytics-brand-split" class="inventory-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="list-head">
+        <h2>Audit Log</h2>
+        <button id="refresh-audit" class="btn btn-alt" type="button">Refresh</button>
+      </div>
+      <div id="audit-list" class="inventory-list"></div>
+    </section>
+  </section>
+
+  <div id="admin-toast" class="toast"></div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

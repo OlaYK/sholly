@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sholly & Shaddy's | Luxury Collections</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-theme="dark">
+  <div class="ambient-bg" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+  </div>
+
+  <header class="topbar" id="topbar">
+    <a href="#top" class="brandmark">
+      <img src="/sholly.jpg" alt="Sholly and Shaddy's logo" class="brandmark-logo" id="brandmark-logo" />
+      <span>
+        <span class="brandmark-main" id="brandmark-main">SHOLLY & SHADDY'S</span>
+        <span class="brandmark-sub" id="brandmark-sub">LUXURY BEDS</span>
+      </span>
+    </a>
+    <button
+      type="button"
+      class="icon-btn menu-toggle"
+      id="menu-toggle"
+      aria-expanded="false"
+      aria-controls="topbar-actions"
+      aria-label="Open header menu"
+      title="Menu"
+    >
+      <span class="menu-line"></span>
+      <span class="menu-line"></span>
+      <span class="menu-line"></span>
+    </button>
+    <div class="topbar-actions" id="topbar-actions">
+      <div class="brand-switch-nav">
+        <button type="button" class="switch-btn" data-brand-switch="sholly-home">Sholly Home</button>
+        <button type="button" class="switch-btn" data-brand-switch="apex-apparel">Apex Apparel</button>
+      </div>
+      <button type="button" class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch to light mode" title="Switch to light mode">
+        <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"></path>
+        </svg>
+        <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 14.1A9 9 0 1 1 9.9 3a7 7 0 1 0 11.1 11.1z"></path>
+        </svg>
+      </button>
+      <a href="/account" class="icon-btn">
+        <span class="label-with-icon">
+          <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 21a8 8 0 0 0-16 0"></path>
+            <circle cx="12" cy="8" r="4"></circle>
+          </svg>
+          <span>My Account</span>
+        </span>
+      </a>
+      <a href="/track" class="icon-btn">
+        <span class="label-with-icon">
+          <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"></path>
+            <circle cx="12" cy="9" r="2.4"></circle>
+          </svg>
+          <span>Track Order</span>
+        </span>
+      </a>
+      <button type="button" class="icon-btn cart-open-btn" id="cart-open">
+        <span class="label-with-icon">
+          <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="9" cy="20" r="1.5"></circle>
+            <circle cx="17" cy="20" r="1.5"></circle>
+            <path d="M3 4h2l2.4 11h10.8l2.1-8H7.2"></path>
+          </svg>
+          <span>My Cart</span>
+        </span>
+        <span id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero reveal">
+      <div class="hero-copy">
+        <p class="eyebrow" id="hero-brand-label">Currently Viewing: Sholly Home</p>
+        <h1 id="hero-title">Curated Luxury For Elevated Living</h1>
+        <p id="hero-description">
+          Pick your preferred brand using the switch. Product inventory and stock update automatically from the backend.
+        </p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-solid" data-brand-switch="sholly-home">View Sholly Home</button>
+          <button type="button" class="btn btn-ghost" data-brand-switch="apex-apparel">View Apex Apparel</button>
+        </div>
+      </div>
+      <div class="hero-metrics">
+        <article class="metric-card">
+          <small>Live Products</small>
+          <strong id="metric-products">0</strong>
+        </article>
+        <article class="metric-card">
+          <small>Total Units</small>
+          <strong id="metric-units">0</strong>
+        </article>
+        <article class="metric-card">
+          <small>Stock Value</small>
+          <strong id="metric-value">&#8358;0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="brand-section reveal" id="sholly-section" data-brand="sholly-home">
+      <header class="section-head">
+        <div class="section-head-top">
+          <div class="section-head-brand">
+            <img src="/sholly.jpg" alt="Sholly and Shaddy's logo" class="section-logo" />
+            <div>
+              <p class="eyebrow">Sholly Home</p>
+              <h2>Luxury Bedding and Decor</h2>
+            </div>
+          </div>
+          <a id="ig-sholly-link" class="brand-ig-link" href="#" target="_blank" rel="noopener" aria-label="Sholly Home Instagram">
+            <svg viewBox="0 0 24 24" class="ig-icon" aria-hidden="true">
+              <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 1.8A3.7 3.7 0 0 0 3.8 7.5v9a3.7 3.7 0 0 0 3.7 3.7h9a3.7 3.7 0 0 0 3.7-3.7v-9a3.7 3.7 0 0 0-3.7-3.7h-9zm9.6 1.4a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4z"/>
+            </svg>
+          </a>
+        </div>
+        <p>Premium duvets, sheets and decor curated for upscale spaces.</p>
+      </header>
+      <div class="filters">
+        <select id="filter-sholly-category" aria-label="Sholly category filter"></select>
+        <input id="filter-sholly-search" type="search" placeholder="Search by name or category..." />
+      </div>
+      <div class="product-grid" id="grid-sholly"></div>
+    </section>
+
+    <section class="brand-section reveal" id="apex-section" data-brand="apex-apparel">
+      <header class="section-head">
+        <div class="section-head-top">
+          <div class="section-head-brand">
+            <img src="/apex.jpg" alt="Apex Apparel logo" class="section-logo" />
+            <div>
+              <p class="eyebrow">Apex Apparel</p>
+              <h2>Statement Fashion and Tailoring</h2>
+            </div>
+          </div>
+          <a id="ig-apex-link" class="brand-ig-link" href="#" target="_blank" rel="noopener" aria-label="Apex Apparel Instagram">
+            <svg viewBox="0 0 24 24" class="ig-icon" aria-hidden="true">
+              <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 1.8A3.7 3.7 0 0 0 3.8 7.5v9a3.7 3.7 0 0 0 3.7 3.7h9a3.7 3.7 0 0 0 3.7-3.7v-9a3.7 3.7 0 0 0-3.7-3.7h-9zm9.6 1.4a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4z"/>
+            </svg>
+          </a>
+        </div>
+        <p>Distinctive native fashion, modern silhouettes and premium tailoring.</p>
+      </header>
+      <div class="filters">
+        <select id="filter-apex-category" aria-label="Apex category filter"></select>
+        <input id="filter-apex-search" type="search" placeholder="Search by name or category..." />
+      </div>
+      <div class="product-grid" id="grid-apex"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Sholly & Shaddy's x Apex Apparel</p>
+    <p>
+      <a href="/track" class="footer-link-with-icon">
+        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"></path>
+          <circle cx="12" cy="9" r="2.4"></circle>
+        </svg>
+        <span>Track Your Order</span>
+      </a>
+    </p>
+    <p>&copy; <span id="year"></span> All rights reserved.</p>
+  </footer>
+
+  <dialog id="product-modal">
+    <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+    <div class="modal-image-wrap">
+      <img id="modal-image" alt="Product image" />
+    </div>
+    <div class="modal-copy">
+      <p class="modal-brand" id="modal-brand"></p>
+      <h3 id="modal-name"></h3>
+      <p class="modal-price">
+        <span id="modal-price"></span>
+        <del id="modal-compare"></del>
+      </p>
+      <p id="modal-description"></p>
+      <div id="modal-variant-wrap" class="modal-variant-wrap" hidden>
+        <label for="modal-variant-select">Select Variant</label>
+        <select id="modal-variant-select"></select>
+        <p id="modal-variant-hint" class="modal-variant-hint"></p>
+      </div>
+      <p class="modal-stock" id="modal-stock"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-solid" id="modal-add-cart">Add to Cart</button>
+        <button type="button" class="btn btn-ghost" id="modal-wishlist">Save</button>
+        <a id="modal-whatsapp" class="btn btn-ghost" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="cart-backdrop" id="cart-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <header class="cart-header">
+      <h3>Your Cart</h3>
+      <button type="button" id="cart-close" class="icon-btn">Close</button>
+    </header>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-summary">
+      <p>Subtotal <strong id="cart-subtotal">&#8358;0</strong></p>
+      <p>Discount <strong id="cart-discount">&#8358;0</strong></p>
+      <p>Shipping <strong id="cart-shipping">&#8358;0</strong></p>
+      <p class="shipping-note" id="shipping-note">Enter your delivery state to get shipping fee.</p>
+      <p>Total <strong id="cart-total">&#8358;0</strong></p>
+      <div class="coupon-row">
+        <input id="coupon-code" type="text" placeholder="Coupon code" />
+        <button type="button" class="btn btn-ghost btn-small" id="apply-coupon">Apply</button>
+      </div>
+      <p class="coupon-note" id="coupon-note"></p>
+    </div>
+    <form id="checkout-form" class="checkout-form">
+      <h4>Checkout</h4>
+      <input id="checkout-name" type="text" placeholder="Full name" required />
+      <input id="checkout-phone" type="tel" placeholder="Phone number" required />
+      <input id="checkout-email" type="email" placeholder="Email (required for Paystack)" />
+      <input id="checkout-shipping-state" type="text" placeholder="Delivery state (required)" required />
+      <input id="checkout-shipping-city" type="text" placeholder="Delivery city (optional)" />
+      <select id="checkout-payment-method" aria-label="Select payment method">
+        <option value="paystack">Paystack (Card/Transfer)</option>
+        <option value="moniepoint">Moniepoint (Card/Transfer)</option>
+        <option value="bank_transfer">Direct Bank Transfer</option>
+      </select>
+      <div id="bank-transfer-panel" class="bank-transfer-panel" hidden>
+        <p class="bank-transfer-title">Transfer to:</p>
+        <p class="bank-transfer-row"><span>Bank</span><strong id="bank-transfer-bank-name">-</strong></p>
+        <p class="bank-transfer-row"><span>Account Name</span><strong id="bank-transfer-account-name">-</strong></p>
+        <p class="bank-transfer-row"><span>Account Number</span><strong id="bank-transfer-account-number">-</strong></p>
+        <p id="bank-transfer-note" class="bank-transfer-note">
+          Complete transfer, then send your order number on WhatsApp for confirmation.
+        </p>
+      </div>
+      <textarea id="checkout-notes" rows="3" placeholder="Notes (optional)"></textarea>
+      <button type="submit" class="btn btn-solid" id="checkout-btn">Proceed to Payment</button>
+    </form>
+  </aside>
+
+  <template id="card-template">
+    <article class="product-card reveal">
+      <div class="card-media">
+        <img class="card-image" alt="" loading="lazy" />
+        <span class="pill pill-featured">Featured</span>
+      </div>
+      <div class="card-body">
+        <p class="card-category"></p>
+        <h3 class="card-name"></h3>
+        <p class="card-description"></p>
+        <p class="card-price">
+          <span class="now"></span>
+          <del class="old"></del>
+        </p>
+        <div class="card-meta">
+          <span class="pill pill-stock"></span>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-small card-wishlist" type="button">Save</button>
+          <button class="btn btn-ghost btn-small card-view" type="button">Quick View</button>
+          <button class="btn btn-solid btn-small card-add" type="button">Add to Cart</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <div class="toast" id="toast"></div>
+  <a id="wa-float" class="wa-float" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+    <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.7 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.1 8.1 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.2-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1l-.8.9c-.1.1-.3.1-.5 0a6.8 6.8 0 0 1-2-1.2 7.6 7.6 0 0 1-1.4-1.8c-.1-.2 0-.4.1-.5l.4-.5.2-.4v-.5c-.1-.2-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.1s.9 2.5 1 2.7a11.8 11.8 0 0 0 4.6 4 11.3 11.3 0 0 0 1.5.6 3.6 3.6 0 0 0 1.7.1c.5-.1 1.6-.7 1.8-1.4.2-.6.2-1.2.1-1.3-.1-.1-.3-.1-.6-.3z"></path>
+    </svg>
+  </a>
+
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

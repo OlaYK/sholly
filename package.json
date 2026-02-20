@@ -1,0 +1,23 @@
+{
+  "name": "sholly-live-store",
+  "version": "1.0.0",
+  "description": "Sholly & Shaddy's full-stack storefront with Neon Postgres",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "db:init": "node scripts/init-db.js",
+    "db:seed": "node scripts/seed-db.js"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "cloudinary": "^2.5.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "lodash": "^4.17.23",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.1"
+  }
+}

@@ -1,0 +1,84 @@
+services:
+  - type: web
+    name: sholly-live-store
+    env: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.19.0
+      - key: AUTO_MIGRATE
+        value: "true"
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_BOOTSTRAP_ROLE
+        value: owner
+      - key: ADMIN_SESSION_TTL_SECONDS
+        value: "43200"
+      - key: CUSTOMER_SESSION_TTL_SECONDS
+        value: "1209600"
+      - key: ADMIN_LOGIN_MAX_ATTEMPTS
+        value: "8"
+      - key: ADMIN_LOGIN_WINDOW_SECONDS
+        value: "900"
+      - key: ADMIN_LOGIN_BLOCK_SECONDS
+        value: "900"
+      - key: APP_2FA_ISSUER
+        value: Sholly Store
+      - key: PAYSTACK_PUBLIC_KEY
+        sync: false
+      - key: PAYSTACK_SECRET_KEY
+        sync: false
+      - key: PAYSTACK_CALLBACK_URL
+        sync: false
+      - key: MONIEPOINT_API_KEY
+        sync: false
+      - key: MONIEPOINT_SECRET_KEY
+        sync: false
+      - key: MONIEPOINT_CONTRACT_CODE
+        sync: false
+      - key: MONIEPOINT_BASE_URL
+        value: https://api.monnify.com
+      - key: MONIEPOINT_REDIRECT_URL
+        sync: false
+      - key: MONIEPOINT_WEBHOOK_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: sholly-store
+      - key: INSTAGRAM_SHOLLY_URL
+        sync: false
+      - key: INSTAGRAM_APEX_URL
+        sync: false
+      - key: WHATSAPP_NUMBER
+        sync: false
+      - key: BANK_NAME
+        sync: false
+      - key: BANK_ACCOUNT_NAME
+        sync: false
+      - key: BANK_ACCOUNT_NUMBER
+        sync: false
+      - key: BANK_TRANSFER_INSTRUCTIONS
+        sync: false
+      - key: DEFAULT_SHIPPING_FEE_KOBO
+        value: "550000"
+      - key: FREE_SHIPPING_THRESHOLD_KOBO
+        value: "0"
