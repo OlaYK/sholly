@@ -1105,17 +1105,21 @@ function renderCart() {
           <img src="${imageUrl}" alt="${name}" />
           <div>
             <h5>${title}</h5>
-            <p>${formatMoney(unitPrice)} each</p>
+            <p class="cart-item-meta">${formatMoney(unitPrice)} each</p>
+            <p class="cart-item-stock">In stock: ${Math.max(maxStock, 0)}</p>
           </div>
         </div>
         <div class="cart-controls">
           <div class="qty-controls">
-            <button type="button" data-action="minus">-</button>
+            <button type="button" data-action="minus" aria-label="Decrease quantity">-</button>
             <span>${item.qty}</span>
-            <button type="button" data-action="plus">+</button>
+            <button type="button" data-action="plus" aria-label="Increase quantity">+</button>
           </div>
-          <strong>${formatMoney(lineTotal)}</strong>
-          <button type="button" class="remove-item">Remove</button>
+          <div class="cart-line-total">
+            <small>Item Total</small>
+            <strong>${formatMoney(lineTotal)}</strong>
+          </div>
+          <button type="button" class="remove-item">Delete</button>
         </div>
       `;
 
